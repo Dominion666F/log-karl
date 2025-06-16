@@ -1,21 +1,52 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Redirection vers Obsidian</title>
-  <script>
-    window.onload = async () => {
-      let clip = await navigator.clipboard.readText();
-      let vault = "Sagesse III";
-      let file = "Log Karl.md";
-      let uri = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(file)}`;
-      window.location.href = uri;
-      document.getElementById("content").textContent = clip;
-    };
-  </script>
+  <meta charset="UTF-8" />
+  <title>Append en haut – Log Karl</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2em;
+      background: #fff;
+    }
+    pre {
+      background: #f5f5f5;
+      padding: 1em;
+      border: 1px solid #ccc;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+    button {
+      margin-top: 1em;
+      padding: 0.6em 1em;
+      font-size: 1em;
+    }
+  </style>
 </head>
 <body>
-  <h1>📋 Ton contenu est prêt à coller :</h1>
-  <pre id="content">Lecture du presse-papier...</pre>
+  <h1>📋 Log automatique – prepend avec espace</h1>
+  <button onclick="load()">📥 Ajouter en haut de Log Karl</button>
+  <pre id="content">En attente de contenu...</pre>
+
+  <script>
+    async function load() {
+      const el = document.getElementById("content");
+      try {
+        const clip = await navigator.clipboard.readText();
+        const padded = "\n" + clip;  // Ligne vide avant
+
+        el.textContent = padded;
+
+        const vault = "Sagesse III";
+        const file = "Log Karl.md";
+        const uri = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(file)}&data=${encodeURIComponent(padded)}&mode=prepend`;
+
+        setTimeout(() => location.href = uri, 300);
+
+      } catch (err) {
+        el.textContent = "⛔️ Impossible de lire le presse-papier\n" + err;
+      }
+    }
+  </script>
 </body>
 </html>
