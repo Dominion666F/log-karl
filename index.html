@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirection vers Obsidian</title>
+  <script>
+    window.onload = async () => {
+      let clip = await navigator.clipboard.readText();
+      let vault = "Sagesse III";
+      let file = "Log Karl.md";
+      let uri = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(file)}`;
+      window.location.href = uri;
+      document.getElementById("content").textContent = clip;
+    };
+  </script>
+</head>
+<body>
+  <h1>📋 Ton contenu est prêt à coller :</h1>
+  <pre id="content">Lecture du presse-papier...</pre>
+</body>
+</html>
