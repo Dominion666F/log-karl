@@ -1,29 +1,31 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="fr">
 <head><meta charset="UTF-8"/><title>Append – Log Karl</title>
-<style>body{font-family:monospace;background:#f9f9f9;color:#111;padding:2em}pre{background:#eee;border:1px solid #999;padding:1em;white-space:pre-wrap}button{font-family:monospace;padding:.6em 1em;font-size:1em;border:1px solid #333;background:#ddd;cursor:pointer}</style>
+<style>
+body{font-family:monospace;background:#f9f9f9;color:#111;padding:2em}
+pre{background:#eee;border:1px solid #999;padding:1em;white-space:pre-wrap}
+button{font-family:monospace;padding:.6em 1em;font-size:1em;border:1px solid #333;background:#ddd;cursor:pointer}
+</style>
 </head>
 <body>
   <button onclick="load()">BALANCE DANS LE LOG</button>
-  <pre id="content">⏳ Attente presse-papier...</pre>
+  <pre id="content">⏳ Attente du presse-papier...</pre>
   <script>
     async function load() {
       const el = document.getElementById("content");
       try {
         const clip = await navigator.clipboard.readText();
-        const separated = "\n\n---\n\n" + clip;
+        const indent = clip.replace(/^-/gm, "  -");
+        const separated = "\n\n---\n\n" + indent;
         el.textContent = separated;
 
-        const vault = "Junk-md";
-        const file = "01_Log/Log.md";
-        const uri = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(file)}&data=${encodeURIComponent(separated)}&mode=append`;
-
-        setTimeout(() => location.href = uri, 300);
+        const vault="Junk-md", file="01_Log/Log.md";
+        const uri=`obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(file)}&data=${encodeURIComponent(separated)}&mode=append`;
+        setTimeout(()=>location.href=uri,300);
       } catch(err) {
-        el.textContent = "⛔️ Impossible de lire le presse-papier\n"+err;
+        el.textContent="⛔️ Impossible de lire le presse-papier\n"+err;
       }
     }
   </script>
 </body>
 </html>
-
