@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head><meta charset="UTF-8"/><title>Append – Log Karl</title>
-<style>
-body { font-family: monospace; background: #f9f9f9; color:#111; padding:2em }
-pre { background:#eee; border:1px solid #999; padding:1em; white-space:pre-wrap }
-button { font-family: monospace; padding:0.6em 1em; font-size:1em;
-         border:1px solid #333; background:#ddd; cursor:pointer }
-</style>
+<style>body{font-family:monospace;background:#f9f9f9;color:#111;padding:2em}pre{background:#eee;border:1px solid #999;padding:1em;white-space:pre-wrap}button{font-family:monospace;padding:.6em 1em;font-size:1em;border:1px solid #333;background:#ddd;cursor:pointer}</style>
 </head>
 <body>
   <button onclick="load()">BALANCE DANS LE LOG</button>
@@ -21,13 +16,9 @@ button { font-family: monospace; padding:0.6em 1em; font-size:1em;
 
         const vault = "Junk-md";
         const file = "01_Log/Log.md";
-        const encodedClipboard = encodeURIComponent(separated);
-        const uri = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(file)}&clipboard=true&mode=append`;
+        const uri = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(file)}&data=${encodeURIComponent(separated)}&mode=append`;
 
-        setTimeout(() => {
-          /* place apparente + copie manuelle si besoin */
-          location.href = uri;
-        }, 300);
+        setTimeout(() => location.href = uri, 300);
       } catch(err) {
         el.textContent = "⛔️ Impossible de lire le presse-papier\n"+err;
       }
@@ -35,3 +26,4 @@ button { font-family: monospace; padding:0.6em 1em; font-size:1em;
   </script>
 </body>
 </html>
+
